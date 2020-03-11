@@ -11,9 +11,13 @@ var endy = 0;
 /* 
 主函数  开始游戏
 */
-$(function() {
+$(function () {
 	prepareForMobile();
 	newgame()
+	if (localStorage.getItem('best') == null) {
+		localStorage.setItem('best', score)
+	}
+	// localStorage.removeItem('best')
 	best()
 });
 
@@ -45,7 +49,7 @@ function newgame() {
 	score = 0
 	$('#score').text(score)
 	$('#gemeOver').css({
-		display:'none'
+		display: 'none'
 	})
 };
 
@@ -142,7 +146,7 @@ function generateOneNumber() {
 	return true;
 }
 
-$(document).keydown(function(e) {
+$(document).keydown(function (e) {
 	switch (e.keyCode) {
 		case 37: //left// 取消按键上下左右的默认行为
 			e.preventDefault();
@@ -177,18 +181,18 @@ $(document).keydown(function(e) {
 	}
 });
 
-document.addEventListener('touchstart', function(event) {
+document.addEventListener('touchstart', function (event) {
 	startx = event.touches[0].pageX
 	starty = event.touches[0].pageY
 })
 
-document.addEventListener('touchmove', function(e) {
+document.addEventListener('touchmove', function (e) {
 	e.preventDefault()
 }, {
 	passive: false
 })
 
-document.addEventListener('touchend', function(event) {
+document.addEventListener('touchend', function (event) {
 	endx = event.changedTouches[0].pageX;
 	endy = event.changedTouches[0].pageY;
 
@@ -242,7 +246,7 @@ function isgameover() {
 
 function gameover() {
 	$('#gemeOver').css({
-		display:'block'
+		display: 'block'
 	})
 }
 
@@ -286,7 +290,7 @@ function moveLeft() {
 				}
 			}
 		}
-	setTimeout(function() {
+	setTimeout(function () {
 		updataBoardView();
 	}, 200)
 	return true;
@@ -323,7 +327,7 @@ function moveRight() {
 				}
 			}
 		}
-	setTimeout(function() {
+	setTimeout(function () {
 		updataBoardView();
 	}, 200)
 	return true;
@@ -364,7 +368,7 @@ function moveUp() {
 			}
 		}
 
-	setTimeout(function() {
+	setTimeout(function () {
 		updataBoardView();
 	}, 200)
 	return true;
@@ -402,7 +406,7 @@ function moveDown() {
 				}
 			}
 		}
-	setTimeout(function() {
+	setTimeout(function () {
 		updataBoardView();
 	}, 200)
 
@@ -413,11 +417,11 @@ function updateScore() {
 	if (score >= parseInt($('#best').text())) {
 		$('#score').text(score)
 		$('#best').text(score)
-		localStorage.setItem('best',score)
+		localStorage.setItem('best', score)
 	}
 	best()
 	$('#score').text(score)
 }
-function best(){
+function best() {
 	$('#best').text(localStorage.getItem('best'))
 }
